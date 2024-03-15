@@ -36,7 +36,7 @@ class RequestLog(Log):
 class ResponseLog(Log):
     status_code: int
     request_time_duration: datetime.time
-    error: str | None
+    error: str | dict | None
 
     def __str__(self):
         return f"({self.request_id}) {self.type.value} {self.status_code} - {self.request_time_duration} - {self.error}"
