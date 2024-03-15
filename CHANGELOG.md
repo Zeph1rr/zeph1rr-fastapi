@@ -1,0 +1,4 @@
+- Ready first version of utils
+- Added logging settings
+- Added project utils
+- Added utils for jwt and uuid encoding
