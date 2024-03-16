@@ -62,14 +62,16 @@ async def loggingMiddleware(request: Request, call_next: Callable) -> Response:
 
     Adding uuid req_id to request.state for easy parsing logs"""
     start_time = time.time()
-    request_id = uuid4()
     req_body = await request.body()
+    body = req_body.decode("utf-8")
+    body_dict: dict = json.loads(body) if body else {}
+    request_id = body_dict.get("req_id") if "req_id" in body_dict.keys() else uuid4()
     request_log_data = {
         "request_id": request_id,
         "type": "REQUEST",
         "method": request.method,
         "path": request.url.path,
-        "body": req_body.decode("utf-8"),
+        "body": str(body_dict),
     }
     request.state.req_id = request_id
     logger.info(str(RequestLog(**request_log_data)))
